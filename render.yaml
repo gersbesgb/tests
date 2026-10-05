@@ -1,0 +1,22 @@
+# Optional: Render can read this file to auto-configure the service
+# ("Blueprint" deploy) instead of clicking through the dashboard.
+services:
+  - type: web
+    name: indium-web
+    runtime: node
+    plan: starter          # "free" works too, but see the persistent-disk note in README.md
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: JWT_SECRET
+        generateValue: true
+      - key: ADMIN_USERNAME
+        value: GersBes
+      - key: ALLOWED_ORIGIN
+        value: ""           # set to your Cloudflare Pages URL after it's created
+      - key: DATA_DIR
+        value: /var/data
+    disk:
+      name: indium-data
+      mountPath: /var/data
+      sizeGB: 1
